@@ -373,8 +373,12 @@ class Tree:
 			.fill(self.val_colors[0]) \
 			.draw()
 		
+		colors = [self.val_colors[0], self.val_colors[0]]
+		if len(self.val_colors) == 2:
+			colors = [self.val_colors[1], self.val_colors[0]]
+		
 		Rectangle() \
 			.position(self.__x() - 4 * scale_factor, self.__y()) \
 			.size(8 * scale_factor, -trunk_height) \
-			.gradient(self.val_colors[1], self.val_colors[0]) \
+			.gradient(*colors) \
 			.draw()
