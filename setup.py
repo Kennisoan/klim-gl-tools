@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
 		name='klim-gl-tools',
-		version='0.2-dev',
+		version='0.2',
 		py_modules=['klim_gl_tools'],
 		description='A collection of tools for PyOpenGL projects',
 		author='Klim Korovkin',
