@@ -60,139 +60,321 @@ def useSvgPath(path: str) -> list:
 
 # ========================================
 
-def rect(x: float, y: float, width: float, height: float, color: str) -> None:
-	"""Draw a rectangle with the given color.
-	Args:
-		x (float): X-origin point.
-		y (float): Y-origin point.
-		width (float): The width of the rectangle.
-		height (float): The height of the rectangle.
-		color (str): The HEX color code for the rectangle.
+class Rectangle:
 	"""
-	glColor3f(*useHex(color))
-	glRectf(x, y, x + width, y + height)
-
-def rectGradient(x: float, y: float, width: float, height: float, startColor: str, endColor: str) -> None:
-	"""Draw a rectangle with a vertical gradient.
-	Args:
-		x (float): X-origin point.
-		y (float): Y-origin point.
-		width (float): The width of the rectangle.
-		height (float): The height of the rectangle.
-		startColor (str): The HEX color code for the start of the gradient.
-		endColor (str): The HEX color code for the end of the gradient.
+	Rectangle.
 	"""
-	glBegin(GL_QUADS)
-
-	glColor3f(*useHex(startColor))
-	glVertex2f(x, y)  # Bottom Left
-	glVertex2f(x + width, y)  # Bottom Right
+	def __init__(self):
+		self.val_position = [0, 0]
+		self.val_size = [0, 0]
+		self.val_colors = ["#000000"]
 	
-	glColor3f(*useHex(endColor))
-	glVertex2f(x + width, y + height)  # Top Right
-	glVertex2f(x, y + height)  # Top Left
-
-	glEnd()
+	# Shorthands
+		
+	def __x(self):
+		return self.val_position[0]
+	def __y(self):
+		return self.val_position[1]
+	def __w(self):
+		return self.val_size[0]
+	def __h(self):
+		return self.val_size[1]
+		
+	# Modifiers
 	
-def ellipse(x: float, y: float, width: float, height: float, color: str, segments: int = 100) -> None:
-	"""Draw an ellipse specified by the bottom-left point and its width and height.
-	Args:
-		x (float): X-coordinate of the bounding box.
-		y (float): Y-coordinate of the bounding box.
-		width (float): Width of the bounding box of the ellipse.
-		height (float): Height of the bounding box of the ellipse.
-		color (str): The HEX color code for the ellipse.
-		segments (int, optional): The number of segments used to approximate the ellipse. Default is 100.
-	"""
-	x_center = x + width / 2
-	y_center = y + height / 2
-	radius_x = width / 2
-	radius_y = height / 2
-	glColor3f(*useHex(color))
-	theta = 0
-	step = 2 * math.pi / segments
+	def position(self, x: float, y: float):
+		"""
+		Sets position by x and y coordinates.
+		"""
+		self.val_position = [x, y]
+		return self
+		
+	def size(self, width, height = None):
+		"""
+		Sets width and height.
+		"""
+		if height is None: height = width
+		self.val_size = [width, height]
+		return self
 	
-	glBegin(GL_POLYGON)
-	for _ in range(segments):
-		x = x_center + radius_x * math.cos(theta)
-		y = y_center + radius_y * math.sin(theta)
-		glVertex2f(x, y)
-		theta += step
+	def fill(self, color):
+		"""
+		Sets a solid fill color (HEX).
+		"""
+		self.val_colors = [color]
+		return self
 	
-	glEnd()
-
-def polygon(vertices, color: str, xoffset: float = 0.0 , yoffset: float = 0.0) -> None:
-	"""Draw a filled polygon shape from a list of vertex positions.
-	Args:
-		vertices (list[tuple[float, float]]): A list of tuples, each representing the x and y coordinates of a vertex.
-		color (str): The HEX color code for the polygon.
-		xoffset (float): global offset by x axis.
-		yoffset (float): global offset by y axis.
-	"""
-	glColor3f(*useHex(color))
-	glBegin(GL_POLYGON)
-	for vertex in vertices:
-		glVertex2f(vertex[0] + xoffset, vertex[1] + yoffset)
+	def gradient(self, colorFrom, colorTo):
+		"""
+		Applies a linear gradient from top to bottom.
+		"""
+		self.val_colors = [colorFrom, colorTo]
+		return self
 	
-	glEnd()
-
-def tessellate(vertices, color, xoffset: float = 0.0 , yoffset: float = 0.0):
-	"""Draw a filled polygon shape from a list of vertex positions.
-	Args:
-		vertices (list[tuple[float, float]]): A list of tuples, each representing the x and y coordinates of a vertex.
-		color (str): The HEX color code for the polygon.
-		xoffset (float): global offset by x axis.
-		yoffset (float): global offset by y axis.
-	"""
-	def vertexCallback(vertex):
-		glVertex3dv(vertex)
-
-	def beginCallback(mode):
-		glBegin(mode)
-
-	def endCallback():
+	def draw(self):
+		"""
+		Draws the shape.
+		"""
+		glBegin(GL_QUADS)
+		
+		if len(self.val_colors) == 1:
+			startColor = self.val_colors[0]
+			endColor = self.val_colors[0]
+		else:
+			startColor = self.val_colors[0]
+			endColor = self.val_colors[1]
+		
+		glColor3f(*useHex(startColor))
+		glVertex2f(self.__x(), self.__y())  # Bottom Left
+		glVertex2f(self.__x() + self.__w(), self.__y())  # Bottom Right
+		
+		glColor3f(*useHex(endColor))
+		glVertex2f(self.__x() + self.__w(), self.__y() + self.__h())  # Top Right
+		glVertex2f(self.__x(), self.__y() + self.__h())  # Top Left
+		
 		glEnd()
 
-	def combineCallback(coords, vertex_data, weight):
-		return coords
+class Ellipse:
+		"""
+		Ellipse.
+		"""
+		def __init__(self):
+			self.val_position = [0, 0]
+			self.val_size = [0, 0]
+			self.val_color = "#000000"
+			self.val_segments = 100
+		
+		# Shorthands
+			
+		def __x(self):
+			return self.val_position[0]
+		def __y(self):
+			return self.val_position[1]
+		def __w(self):
+			return self.val_size[0]
+		def __h(self):
+			return self.val_size[1]
+			
+		# Modifiers
+		
+		def position(self, x: float, y: float):
+			"""
+			Sets position by x and y coordinates.
+			"""
+			self.val_position = [x, y]
+			return self
+			
+		def size(self, width, height = None):
+			"""
+			Sets width and height.
+			"""
+			if height is None: height = width
+			self.val_size = [width, height]
+			return self
+		
+		def quality(self, segments):
+			"""
+			Sets the draw quality of shape in amount of segments used.
+			"""
+			self.val_segments = segments
+			return self
+		
+		def fill(self, color):
+			"""
+			Sets a solid fill color (HEX).
+			"""
+			self.val_color = color
+			return self
+		
+		def draw(self):
+			"""
+			Draws the shape.
+			"""
+			x_center = self.__x() + self.__w() / 2
+			y_center = self.__y() + self.__h() / 2
+			radius_x = self.__w() / 2
+			radius_y = self.__h() / 2
+			glColor3f(*useHex(self.val_color))
+			theta = 0
+			step = 2 * math.pi / self.val_segments
+			
+			glBegin(GL_POLYGON)
+			for _ in range(self.val_segments):
+				x = x_center + radius_x * math.cos(theta)
+				y = y_center + radius_y * math.sin(theta)
+				glVertex2f(x, y)
+				theta += step
+			
+			glEnd()
 
-	tess = gluNewTess()
-	gluTessCallback(tess, GLU_TESS_VERTEX, vertexCallback)
-	gluTessCallback(tess, GLU_TESS_BEGIN, beginCallback)
-	gluTessCallback(tess, GLU_TESS_END, endCallback)
-	gluTessCallback(tess, GLU_TESS_COMBINE, combineCallback)
-	
-	glColor3f(*useHex(color))
-	gluTessBeginPolygon(tess, None)
-	gluTessBeginContour(tess)
-	for vertex in vertices:
-		vertex3 = (vertex[0] + xoffset, vertex[1] + yoffset, 0)
-		gluTessVertex(tess, vertex3, vertex3)
-	gluTessEndContour(tess)
-	gluTessEndPolygon(tess)
-	gluDeleteTess(tess)
-
-def tree(x: float, y: float, height: float, color: str, root_color: str):
-	"""Draw a low-poly tree
-	Args:
-		x (float): X-coordinate of the tree root.
-		y (float): Y-coordinate of the tree root.
-		height (float): Tree height.
-		color (str): The HEX color code for the tree.
-		root_color (str): The HEX color code for the tree trunk (root).
+class Polygon:
 	"""
-	original_foliage_height = 46
-	original_trunk_height = 8
-	original_total_height = original_foliage_height + original_trunk_height
+	Draws a complex shape described by vertices.
+	"""
+	def __init__(self):
+		self.val_vertices = [(0,0)]
+		self.val_position = [0, 0]
+		self.val_color = "#000000"
+		self.val_tessellate = False
 	
-	scale_factor = height / original_total_height
-	foliage_height = original_foliage_height * scale_factor
-	trunk_height = original_trunk_height * scale_factor
+	# Shorthands
+		
+	def __x(self):
+		return self.val_position[0]
+	def __y(self):
+		return self.val_position[1]
+		
+	# Modifiers
 	
-	polygon([
-		(x - 15 * scale_factor, y - trunk_height),
-		(x, y - foliage_height - trunk_height),
-		(x + 15 * scale_factor, y - trunk_height)
-	], color)
+	def useVertexArray(self, array: list):
+		"""
+		Builds shape from a vertex array of shape: [(x1,y1), (x2,y2), ...].
+		"""
+		self.val_vertices = array
+		return self
 	
-	rectGradient(x - 4 * scale_factor, y, 8 * scale_factor, -trunk_height, root_color, color)
+	def useSvgPath(self, path: str):
+		"""
+		Builds shape from SVG path data (<path d="..." />).
+		"""
+		self.val_vertices = useSvgPath(path)
+		return self
+	
+	def position(self, x: float, y: float):
+		"""
+		Offsets position by x and y coordinates.
+		"""
+		self.val_position = [x, y]
+		return self
+	
+	def tessellate(self):
+		"""
+		Applies tessellation to the shape.
+		"""
+		self.val_tessellate = True
+		return self
+	
+	def fill(self, color):
+		"""
+		Sets a solid fill color (HEX).
+		"""
+		self.val_color = color
+		return self
+	
+	def draw(self):
+		"""
+		Draws the shape.
+		"""
+		
+		if not self.val_tessellate:
+			glColor3f(*useHex(self.val_color))
+			glBegin(GL_POLYGON)
+			for vertex in self.val_vertices:
+				glVertex2f(vertex[0] + self.__x(), vertex[1] + self.__y())
+			
+			glEnd()
+		else:
+			def vertexCallback(vertex):
+				glVertex3dv(vertex)
+			
+			def beginCallback(mode):
+				glBegin(mode)
+			
+			def endCallback():
+				glEnd()
+			
+			def combineCallback(coords, vertex_data, weight):
+				return coords
+			
+			tess = gluNewTess()
+			gluTessCallback(tess, GLU_TESS_VERTEX, vertexCallback)
+			gluTessCallback(tess, GLU_TESS_BEGIN, beginCallback)
+			gluTessCallback(tess, GLU_TESS_END, endCallback)
+			gluTessCallback(tess, GLU_TESS_COMBINE, combineCallback)
+			
+			glColor3f(*useHex(self.val_color))
+			gluTessBeginPolygon(tess, None)
+			gluTessBeginContour(tess)
+			for vertex in self.val_vertices:
+				vertex3 = (vertex[0] + self.__x(), vertex[1] + self.__y(), 0)
+				gluTessVertex(tess, vertex3, vertex3)
+			gluTessEndContour(tess)
+			gluTessEndPolygon(tess)
+			gluDeleteTess(tess)
+
+class Tree:
+	"""
+	A simple tree with solid or gradient fill.
+	"""
+	def __init__(self):
+		self.val_position = [0, 0]
+		self.val_size = [0, 0]
+		self.val_colors = ["#000000"]
+	
+	# Shorthands
+		
+	def __x(self):
+		return self.val_position[0]
+	def __y(self):
+		return self.val_position[1]
+	def __w(self):
+		return self.val_size[0]
+	def __h(self):
+		return self.val_size[1]
+		
+	# Modifiers
+	
+	def position(self, x: float, y: float):
+		"""
+		Sets position by x and y coordinates.
+		"""
+		self.val_position = [x, y]
+		return self
+		
+	def size(self, height):
+		"""
+		Sets height of the tree.
+		"""
+		self.val_size = [0, height]
+		return self
+	
+	def fill(self, color):
+		"""
+		Sets a solid fill color (HEX).
+		"""
+		self.val_colors = [color]
+		return self
+	
+	def gradient(self, colorFrom, colorTo):
+		"""
+		Applies a linear gradient from top to bottom to trunk (foliage is colored with `colorFrom`).
+		"""
+		self.val_colors = [colorFrom, colorTo]
+		return self
+	
+	def draw(self):
+		"""
+		Draws the shape.
+		"""
+		original_foliage_height = 46
+		original_trunk_height = 8
+		original_total_height = original_foliage_height + original_trunk_height
+		
+		scale_factor = self.__h() / original_total_height
+		foliage_height = original_foliage_height * scale_factor
+		trunk_height = original_trunk_height * scale_factor
+		
+		Polygon() \
+			.useVertexArray([
+				(self.__x() - 15 * scale_factor, self.__y() - trunk_height),
+				(self.__x(), self.__y() - foliage_height - trunk_height),
+				(self.__x() + 15 * scale_factor, self.__y() - trunk_height)
+			]) \
+			.fill(self.val_colors[0]) \
+			.draw()
+		
+		Rectangle() \
+			.position(self.__x() - 4 * scale_factor, self.__y()) \
+			.size(8 * scale_factor, -trunk_height) \
+			.gradient(self.val_colors[1], self.val_colors[0]) \
+			.draw()

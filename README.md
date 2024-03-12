@@ -1,70 +1,59 @@
 # Klim's GL Tools
 
-This custom Python library offers a suite of functions to simplify drawing operations using OpenGL. It's designed to make creating basic geometric shapes and some more complex drawings like gradients straightforward.
+Klim's GL Tools is a custom Python library designed to streamline the process of creating graphical elements with OpenGL. It simplifies the task of drawing basic geometric shapes and executing more intricate designs, such as gradients.
 
 ## Installation
 
-You can install Klim’s GL Tools manually, or by using pip:
+Klim’s GL Tools can be installed either manually or via pip with the following command:
 ```bash
 pip3 install git+https://github.com/Kennisoan/klim-gl-tools.git
 ```
-Then import `klim_gl_tools` in your code and you're ready to go:
+After installation, import the desired elements from the library to start utilizing its features.
 ```python
-import klim_gl_tools as kt
+from klim_gl_tools import Rectangle ...
 ```
 
-## Shapes
-Below, you'll find a brief overview of each function available in the library, alongside some usage examples.
+## Getting Started
 
-### Rectangle
-Draws a solid-color rectangle. Great for simple shapes or backgrounds.
+At the heart of Klim’s GL Tools are two core concepts: objects and modifiers. Objects are the visual elements, such as shapes or figures, that you intend to display. Modifiers, on the other hand, are used to alter the appearance or behavior of these objects.
+
+Consider the following example:
 ```python
-rect(x, y, width, height, color)
-# Example (creates a recangle with bottom-left corner at (5px, 10px) with 100px width and 50px height with HEX-color #FF5733):
-rect(5, 10, 100, 50, "#FF5733")
+Rectangle() \
+	.position(0, 50) \
+	.size(100, 50) \
+	.fill("#FFD266") \
+	.draw()
 ```
+In this snippet, `Rectangle` represents the object, while `.position()`, `.size()`, and `.fill()` are modifiers that define the rectangle's characteristics.
 
-### Rectangle with a top-down gradient
-Creates a rectangle with a vertical gradient. Ideal for backgrounds with a bit more flair.
-```python
-rectGradient(x, y, width, height, startColor, endColor)
-# Example (creates a recangle with bottom-left corner at (5px, 10px) with 100px width and 50px height with a top-down gradient from #FFFFFF to #FF5733):
-rectGradient(5, 10, 100, 50, "#FFFFFF", "#FF5733")
-```
+The `.draw()` modifier is unique as it does not modify the object's attributes but instead renders the object onto the screen. It is crucial to apply this modifier last to ensure all other modifications are reflected in the final display.
 
-### Ellipse
-Draws an ellipse or circle, specified by its bounding box.
-```python
-ellipse(x, y, width, height, color, segments=100)
-# Example (creates an ellipse in a bounding box with bottom-left corner at (5px, 10px) with 100px width and 50px height with a top-down gradient from #FFFFFF to #FF5733):
-ellipse(5, 10, 100, 50, "#FF5733", segments=100)
-```
-The shape is approximated using polygons, you can control amount of segemnts that make up the shape using `segments` (100 by default).
+Different objects support various modifiers, tailored to their specific characteristics. For detailed information on the objects and applicable modifiers, refer to the [Objects](#objects) and [Modifiers](#modifiers) sections.
 
-### Polygon
-Renders a filled polygon from a list of vertices. Use it for custom shapes. Specify vertices in an array like this: `[(x1,y1), (x2,y2), ...]`.
-```python
-polygon(vertices, color, xoffset=0.0, yoffset=0.0)
-```
-Use `xoffset` and `yoffset` to offset the whole shape by x and y axes.
+## Objects
 
-### Tessellate shape
-Similar to `polygon`, but for complex (non-convex) shapes that require tessellation to render correctly. Specify vertices in an array like this: `[(x1,y1), (x2,y2), ...]`.
-```python
-tessellate(vertices, color, xoffset=0.0, yoffset=0.0)
-```
-Use `xoffset` and `yoffset` to offset the whole shape by x and y axes.
+The table below outlines the available objects along with their descriptions and applicable modifiers:
 
-## Other Tools
+| Object     | Description               | Modifiers                                                   |
+|------------|---------------------------|-------------------------------------------------------------|
+| `Rectangle`| A rectangle shape.        | `.position()`<br>`.size()`<br>`.fill()`<br>`.gradient()`<br>`.draw()` |
+| `Ellipse`  | An ellipse shape.         | `.position()`<br>`.size()`<br>`.quality()`<br>`.fill()`<br>`.draw()` |
+| `Polygon`  | A complex polygon shape.  | `.useVertexArray()`<br>`.useSvgPath()`<br>`.position()`<br>`.tessellate()`<br>`.fill()`<br>`.draw()` |
+| `Tree`     | A simple tree with fill.  | `.position()`<br>`.size()`<br>`.fill()`<br>`.gradient()`<br>`.draw()` |
 
-### HEX to RGB
-```python
-useHex(hex)
-```
-Converts a HEX color code into RGB format, making it easy to use web colors directly in OpenGL.
+## Modifiers
 
-### SVG Path to vertices
-```python
-useSvgPath(path)
-```
-Convets SVG path string (`<path d="..."/>`) into a vertex array that can be used with `polygon` and `tessellate`.
+Modifiers are instrumental in defining the properties and behaviors of objects. Below is a table summarizing each modifier and its purpose:
+
+| Modifier           | Description                                                                                   |
+|--------------------|-----------------------------------------------------------------------------------------------|
+| `draw()`           | Renders the object onto the screen or canvas. Apply this last to ensure all modifications are displayed. |
+| `position()`       | Sets the object's location with `x` and `y` coordinates.                                      |
+| `size()`           | Determines the object's dimensions. Accepts width and height, using the width if height is omitted. |
+| `fill()`           | Colors the object with a solid color, specified by a HEX code.                                |
+| `gradient()`       | Creates a vertical gradient by transitioning between two HEX-coded colors.                    |
+| `quality()`        | Adjusts the rendering quality of the object for finer control over its appearance.            |
+| `useVertexArray()` | Builds the shape using an array of vertex points.     |
+| `useSvgPath()`     | Builds the shape using SVG path data.              |
+| `tessellate()`     | Applies tessellation to the shape, breaking it into smaller geometrical figures.   |
