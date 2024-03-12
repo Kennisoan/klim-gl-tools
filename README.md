@@ -61,7 +61,7 @@ useHex(hex)
 Converts a HEX color code into RGB format, making it easy to use web colors directly in OpenGL.
 
 ### SVG Path to vertices
-```
+```python
 useSvgPath(path)
 ```
 Convets SVG path string (`<path d="..."/>`) into a vertex array that can be used with `polygon` and `tessellate`.

@@ -2,6 +2,7 @@
 .DS_Store
 .nova
 *.icloud
+pyrightconfig.json
 
 # Dependencies
 /node_modules
