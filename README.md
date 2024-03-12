@@ -10,7 +10,7 @@ pip3 install git+https://github.com/Kennisoan/klim-gl-tools.git
 ```
 After installation, import the desired elements from the library to start utilizing its features.
 ```python
-from klim_gl_tools import Rectangle ...
+from klim_gl_tools import Rectangle, ...
 ```
 
 ## Getting Started
