@@ -20,10 +20,10 @@ At the heart of Klim’s GL Tools are two core concepts: objects and modifiers. 
 Consider the following example:
 ```python
 Rectangle() \
-	.position(0, 50) \
-	.size(100, 50) \
-	.fill("#FFD266") \
-	.draw()
+  .position(0, 50) \
+  .size(100, 50) \
+  .fill("#FFD266") \
+  .draw()
 ```
 In this snippet, `Rectangle` represents the object, while `.position()`, `.size()`, and `.fill()` are modifiers that define the rectangle's characteristics.
 
