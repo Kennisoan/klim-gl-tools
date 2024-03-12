@@ -4,7 +4,7 @@ This custom Python library offers a suite of functions to simplify drawing opera
 
 ## Installation
 
-You can install Klim’s GLUT Tools manually, or by using pip:
+You can install Klim’s GL Tools manually, or by using pip:
 ```bash
 pip3 install git+https://github.com/Kennisoan/klim-gl-tools.git
 ```
