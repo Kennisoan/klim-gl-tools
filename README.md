@@ -1,4 +1,4 @@
-# Klim's GLUT Tools
+# Klim's GL Tools
 
 This custom Python library offers a suite of functions to simplify drawing operations using OpenGL. It's designed to make creating basic geometric shapes and some more complex drawings like gradients and low-poly trees straightforward. Below, you'll find a brief overview of each function available in the library, alongside some usage examples.
 
