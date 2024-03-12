@@ -49,11 +49,11 @@ Modifiers are instrumental in defining the properties and behaviors of objects. 
 | Modifier           | Description                                                                                   |
 |--------------------|-----------------------------------------------------------------------------------------------|
 | `draw()`           | Renders the object onto the screen or canvas. Apply this last to ensure all modifications are displayed. |
-| `position()`       | Sets the object's location with `x` and `y` coordinates.                                      |
-| `size()`           | Determines the object's dimensions. Accepts width and height, using the width if height is omitted. |
-| `fill()`           | Colors the object with a solid color, specified by a HEX code.                                |
-| `gradient()`       | Creates a vertical gradient by transitioning between two HEX-coded colors.                    |
-| `quality()`        | Adjusts the rendering quality of the object for finer control over its appearance.            |
-| `useVertexArray()` | Builds the shape using an array of vertex points.     |
-| `useSvgPath()`     | Builds the shape using SVG path data.              |
+| `position(x, y)`       | Sets the object's location with `x` and `y` coordinates.                                      |
+| `size(width, height)`           | Determines the object's dimensions. Accepts width and height, using the width if height is omitted. |
+| `fill(hex-string)`           | Colors the object with a solid color, specified by a HEX code.                                |
+| `gradient([hex-string, hex-string])`       | Creates a vertical gradient by transitioning between two HEX-coded colors.                    |
+| `quality(n)`        | Adjusts the rendering quality of the object for finer control over its appearance.            |
+| `useVertexArray(data)` | Builds the shape using an array of vertex points.     |
+| `useSvgPath(data)`     | Builds the shape using SVG path data.              |
 | `tessellate()`     | Applies tessellation to the shape, breaking it into smaller geometrical figures.   |
