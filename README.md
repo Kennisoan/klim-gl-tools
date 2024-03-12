@@ -13,13 +13,7 @@ or
 pip3 install git+https://github.com/Kennisoan/klim-glut-tools.git
 ```
 
-## Quick Guide
-
-### useHex
-```python
-useHex(hex)
-```
-Converts a HEX color code into RGB format, making it easy to use web colors directly in OpenGL.
+## Shapes
 
 ### Rectangle
 ```python
@@ -56,6 +50,14 @@ Similar to `polygon`, but for complex shapes that require tessellation to render
 tree(x, y, height, color, root_color)
 ```
 Draws a stylized, low-poly tree. Useful for adding simple natural elements to a scene.
+
+## Other Tools
+
+### useHex
+```python
+useHex(hex)
+```
+Converts a HEX color code into RGB format, making it easy to use web colors directly in OpenGL.
 
 ## Examples
 
