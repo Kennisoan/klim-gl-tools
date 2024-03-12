@@ -1,19 +1,20 @@
-# Klim's GLUT Tools
+# Klim's GL Tools
 
-This custom Python library offers a suite of functions to simplify drawing operations using OpenGL. It's designed to make creating basic geometric shapes and some more complex drawings like gradients and low-poly trees straightforward. Below, you'll find a brief overview of each function available in the library, alongside some usage examples.
+This custom Python library offers a suite of functions to simplify drawing operations using OpenGL. It's designed to make creating basic geometric shapes and some more complex drawings like gradients straightforward.
 
 ## Installation
 
 You can install Klim’s GLUT Tools manually, or by using pip:
 ```bash
-pip install git+https://github.com/Kennisoan/klim-glut-tools.git
+pip3 install git+https://github.com/Kennisoan/klim-gl-tools.git
 ```
-or
-```bash
-pip3 install git+https://github.com/Kennisoan/klim-glut-tools.git
+Then import `klim_gl_tools` in your code and you're ready to go:
+```python
+import klim_gl_tools as kt
 ```
 
 ## Shapes
+Below, you'll find a brief overview of each function available in the library, alongside some usage examples.
 
 ### Rectangle
 ```python
@@ -37,13 +38,13 @@ Draws an ellipse or circle (when width equals height), specified by its bounding
 ```python
 polygon(vertices, color, xoffset=0.0, yoffset=0.0)
 ```
-Renders a filled polygon from a list of vertices. Use it for custom shapes.
+Renders a filled polygon from a list of vertices. Use it for custom shapes. Specify vertices in an array like this: `[(x1,y1), (x2,y2), ...]`.
 
 ### Tessellate shape
 ```python
 tessellate(vertices, color, xoffset=0.0, yoffset=0.0)
 ```
-Similar to `polygon`, but for complex shapes that require tessellation to render correctly.
+Similar to `polygon`, but for complex shapes that require tessellation to render correctly. Specify vertices in an array like this: `[(x1,y1), (x2,y2), ...]`.
 
 ### Low-poly tree
 ```python
@@ -53,11 +54,17 @@ Draws a stylized, low-poly tree. Useful for adding simple natural elements to a 
 
 ## Other Tools
 
-### useHex
+### HEX to RGB
 ```python
 useHex(hex)
 ```
 Converts a HEX color code into RGB format, making it easy to use web colors directly in OpenGL.
+
+### SVG Path to vertices
+```
+useSvgPath(path)
+```
+Convets SVG path string (`<path d="..."/>`) into a vertex array that can be used with `polygon` and `tessellate`.
 
 ## Examples
 
