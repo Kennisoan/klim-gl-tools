@@ -11,12 +11,12 @@ def useHex(hex: str):
 	"""
 	return tuple(int(hex.lstrip('#')[i:i+2], 16) / 255.0 for i in (0, 2, 4))
 
-def useSvgPath(path: str):
+def useSvgPath(path: str) -> list:
 	"""Convert SVG <path> tag to vertex array
 	Args:
 		path (str): The <path> tag as a string
 	Returns:
-		array[tuple]: Vertex array
+		list[tuple]: Vertex array
 	"""
 	
 	path_data = path.split('"')[1]
