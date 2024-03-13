@@ -9,6 +9,7 @@ setup(
 		author_email='klimkorovkin@yandex.ru',
 		url='https://github.com/Kennisoan/klim-glut-tools',
 		install_requires=[
-				'PyOpenGL'
+				'PyOpenGL',
+				'numpy'
 		],
 )
