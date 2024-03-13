@@ -12,7 +12,11 @@ pyrightconfig.json
 # Production
 /build
 
+# Testing
+tests.py
+
 # Misc
+/klim_gl_tools/__pycache__
 .env.local
 .env.development.local
 .env.test.local

@@ -60,7 +60,46 @@ def useSvgPath(path: str) -> list:
 
 # ========================================
 
-class Rectangle:
+class RotatableMixin:
+	
+	def calculate_center(self):
+		# Simple average of all vertices to find the center
+		x_coords = [v[0] for v in self.val_vertices]
+		y_coords = [v[1] for v in self.val_vertices]
+		center_x = sum(x_coords) / len(self.val_vertices)
+		center_y = sum(y_coords) / len(self.val_vertices)
+		return center_x, center_y
+	
+	def rotate(self, angle):
+		"""
+		Rotates the shape around its center by the given angle (in degrees).
+		"""
+		# Convert angle to radians for math operations
+		angle_rad = math.radians(angle)
+		
+		# Assuming the shape has a center (cx, cy) and a list of vertices [(x1, y1), (x2, y2), ...]
+		cx, cy = self.calculate_center()  # Center of the shape
+		new_vertices = []
+		
+		for x, y in self.val_vertices:
+			# Translate point to origin
+			tempX, tempY = x - cx, y - cy
+			
+			# Rotate point
+			rotatedX = tempX * math.cos(angle_rad) - tempY * math.sin(angle_rad)
+			rotatedY = tempX * math.sin(angle_rad) + tempY * math.cos(angle_rad)
+			
+			# Translate point back
+			newX, newY = rotatedX + cx, rotatedY + cy
+			
+			new_vertices.append((newX, newY))
+		
+		self.val_vertices = new_vertices
+		return self
+
+# ========================================
+
+class Rectangle():
 	"""
 	Rectangle.
 	"""
@@ -207,7 +246,7 @@ class Ellipse:
 			
 			glEnd()
 
-class Polygon:
+class Polygon():
 	"""
 	Draws a complex shape described by vertices.
 	"""
