@@ -33,6 +33,8 @@ Here, `Rectangle` is the object. The methods `.position()`, `.size()`, and `.fil
 
 Different objects support various modifiers, tailored to their specific characteristics. For detailed information on the objects and applicable modifiers, refer to the [Objects](#objects) and [Modifiers](#modifiers) sections.
 
+Integrate your objects into a display function to see them rendered in your application. For an example on how this can be done with GLUT, refer to `template.py`.
+
 ## Objects
 
 The table below outlines the available objects along with their descriptions and applicable modifiers:
