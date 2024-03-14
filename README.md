@@ -1,4 +1,4 @@
-# Klim's GL Tools
+# Klim’s GL Tools
 
 Klim's GL Tools is a custom Python library designed to streamline the process of creating graphical elements with OpenGL. It simplifies the task of drawing basic geometric shapes and executing more intricate designs, such as gradients.
 
@@ -102,7 +102,7 @@ The table below outlines the available objects along with their descriptions and
 
 Modifiers are instrumental in defining the properties and behaviors of objects. Below is a table summarizing each modifier and its purpose:
 
-### `.position()`
+#### `.position()`
 Changes the shapes position on canvas. Uses `x` and `y` as input. If `y` is omitted, `x` is used for both values. The shapes's position center is considered to be (0, 0).
 ```python
 .position(10, 20) # Positions object at 10x and 20y
@@ -110,14 +110,14 @@ Changes the shapes position on canvas. Uses `x` and `y` as input. If `y` is omit
 .position() # Positions object at 0x and 0y (default)
 ```
 
-### `.fill()`
+#### `.fill()`
 Applies a solid color fill to a shape. Uses HEX color string as inout.
 ```python
 .fill("#FF0000") # Fills object with a red color
 .fill() # Fills object with a black color (default)
 ```
 
-### `.gradient()`
+#### `.gradient()`
 Applies a linear gradient to a shape. Uses HEX color strings and an integer angle as inout.
 ```python
 .gradient("#FF0000", "#000FF") # Applies a red-to-blue gradient
@@ -125,7 +125,7 @@ Applies a linear gradient to a shape. Uses HEX color strings and an integer angl
 .gradient("#FF0000", "#0FF00", "#000FF", angle=90) # Applies a multi-color gradient, rotated by 90 degrees
 ```
 
-### `.stroke()`
+#### `.stroke()`
 Applies a stoke to a shape. Takes stroke width and color as optional inputs,
 ```python
 .stroke(3, "#FF0000") # Adds a 3px red stroke
@@ -133,19 +133,19 @@ Applies a stoke to a shape. Takes stroke width and color as optional inputs,
 .stroke() # Adds a 1px black stroke (default)
 ```
 
-### `.mask()`
+#### `.mask()`
 Applies a stipple mask to a shape. Accepts a pattern presented as a byte array, and a color as an optional input.
 ```python
 .mask(pattern, "#FF0000") # Applies a red stipple mask.
 .mask(pattern) # Applies a black stipple mask (default).
 ```
 
-### `.draw()`
+#### `.draw()`
 Renders the object onto the screen or canvas. Apply this last to ensure all modifications are displayed.
 
 ### Shape-specific modifiers
 
-### `.size()`
+#### `.size()`
 Sets the size of `Recatngle` anf `Ellipse`. Uses `width` and `height` as input. If `height` is omitted, `width` is used for both values.
 ```python
 .size(10) # Sets the object width and height to 10px
@@ -153,24 +153,24 @@ Sets the size of `Recatngle` anf `Ellipse`. Uses `width` and `height` as input. 
 .size() # Sets the object width and height to opx (default)
 ```
 
-### `.path()`
+#### `.path()`
 Describes a `Polygon` using an array of vertices. Accetps array of vertices as a list of tuples.
 ```python
 .path([(10,0), (20,10), (0,10)]) # Describes a triangle
 .path([(0,0), (0,20), (20,20), (20,0)]) # Describes a square
 ```
 
-### `.quality()`
+#### `.quality()`
 Sets amount of segments used to describe an `Ellipse`. Accepts amount of segments as an integer. Make sure to __use this modifier first__ to ensure that the ellipse is generated properly and all modifiers work correctly.
 ```python
 .quality(16) # Sets quality to 16 segments
 .quality() # Sets quality to 100 segments (default)
 ```
 
-### `.tessellate()`
+#### `.tessellate()`
 Enables tessellation for `Polygon` objects to correctly render non-convex polygon shapes with OpenGL. Tessellation is disabled by default.
 
-### `.height()`
+#### `.height()`
 Sets the height for `Tree` object. Accepts height as integer.
 ```python
 .height(20) # Sets the tree height to 20px
@@ -178,7 +178,7 @@ Sets the height for `Tree` object. Accepts height as integer.
 
 ## Utilities
 
-### `useSvgPath()`
+#### `useSvgPath()`
 Allows to use SVG `<path/>` as a vertex array.
 ```python
 .path(useSvgPath('<path d="M30 10.5L0 20H86V0.5H66.5L41 10.5H30Z"/>')) # Uses SVG path as vertex array input of `.path()`
