@@ -55,13 +55,14 @@ def useHex(hex: str):
 	"""
 	return tuple(int(hex.lstrip('#')[i:i+2], 16) / 255 for i in (0, 2, 4))
 
-def useRgb(rgb: tuple):
+def useRgb(r: float, g: float, b: float):
 	"""Convert RGB format to HEX color code.
 	Args:
 		rgb (tuple[float, float, float]): A tuple containing three floats (R, G, B) ranging from 0.0 to 1.0.
 	Returns:
 		str: The HEX color code as a string starting with '#'.
 	"""
+	rgb = (r, g, b)
 	return '#' + ''.join(f'{int(round(c * 255)):02x}' for c in rgb)
 
 def interpolate_color(color1, color2, fraction):
@@ -106,7 +107,7 @@ def apply_gradient(vertices, colors, angle):
 		right_color_idx = int(np.ceil(segment))
 		fraction = segment - left_color_idx
 		color = interpolate_color(colors_rgb[left_color_idx], colors_rgb[min(right_color_idx, num_colors - 1)], fraction)
-		vertex_colors.append(useRgb(color))
+		vertex_colors.append(useRgb(*color))
 
 	return vertex_colors
 
