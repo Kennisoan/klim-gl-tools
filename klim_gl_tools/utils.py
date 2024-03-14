@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import math
 
 def useSvgPath(path: str):
 	"""
@@ -114,6 +115,34 @@ def apply_gradient(vertices, colors, angle):
 	
 	return vertex_colors
 
+def calculate_center(vertices):
+	sum_x = sum(x for x, _ in vertices)
+	sum_y = sum(y for _, y in vertices)
+	center_x = sum_x / len(vertices)
+	center_y = sum_y / len(vertices)
+	return (center_x, center_y)
+
+def apply_polygon_transformations(x, y, pos_x, pos_y, angle, anchor):
+	"""
+	Applies transformations to vertices based on polygon data.
+	"""
+	anchor_x, anchor_y = anchor[0], anchor[1]
+	x_translated = x - anchor_x
+	y_translated = y - anchor_y
+
+	angle_rad = math.radians(angle)
+	
+	rotated_x = x_translated * math.cos(angle_rad) - y_translated * math.sin(angle_rad)
+	rotated_y = x_translated * math.sin(angle_rad) + y_translated * math.cos(angle_rad)
+	
+	x_back = rotated_x + anchor_x
+	y_back = rotated_y + anchor_y
+	
+	output_x = x_back + pos_x
+	output_y = y_back + pos_y
+	
+	return (output_x, output_y)
+
 def draw_polyon_boject(obj):
 	"""
 	Draw a polygon object with specified obj._render_passes.
@@ -122,12 +151,14 @@ def draw_polyon_boject(obj):
 	- obj: The object to be drawn.
 	"""
 	x, y = obj._position
+	if obj._rotation[1][0] is None or obj._rotation[1][1] is None:
+		obj._rotation = (obj._rotation[0], calculate_center(obj._vertices))
 	
 	if 'fill' in obj._render_passes:
 		glBegin(GL_POLYGON)
 		for vertex, color in zip(obj._vertices, obj._vertex_colors):
 			glColor3f(*useHex(color))
-			glVertex2f(vertex[0] + x, vertex[1] + y)
+			glVertex2f(*apply_polygon_transformations(vertex[0], vertex[1], x, y, obj._rotation[0], obj._rotation[1]))
 		glEnd()
 	
 	if 'mask' in obj._render_passes:
@@ -137,7 +168,7 @@ def draw_polyon_boject(obj):
 		glPolygonStipple(obj._mask[0])
 		glBegin(GL_POLYGON)
 		for vertex in obj._vertices:
-			glVertex2f(vertex[0] + x, vertex[1] + y)
+			glVertex2f(*apply_polygon_transformations(vertex[0], vertex[1], x, y, obj._rotation[0], obj._rotation[1]))
 		glEnd()
 		glDisable(GL_POLYGON_STIPPLE)
 	
@@ -146,7 +177,7 @@ def draw_polyon_boject(obj):
 		glColor3f(*useHex(obj._stroke[1]))
 		glBegin(GL_LINE_LOOP)
 		for vertex in obj._vertices:
-			glVertex2f(vertex[0] + x, vertex[1] + y)
+			glVertex2f(*apply_polygon_transformations(vertex[0], vertex[1], x, y, obj._rotation[0], obj._rotation[1]))
 		glEnd()
 
 def useImageAsPattern(image_path, threshold = 0.5):

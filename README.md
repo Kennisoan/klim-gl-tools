@@ -50,6 +50,7 @@ The table below outlines the available objects along with their descriptions and
     <td><code>Rectangle</code></td>
     <td rowspan="3">
       <code>.position()</code><br>
+      <code>.rotation()</code><br>
       <code>.fill()</code><br>
       <code>.stroke()</code><br>
       <code>.gradient()</code><br>
@@ -108,6 +109,14 @@ Changes the shapes position on canvas. Uses `x` and `y` as input. If `y` is omit
 .position(10, 20) # Positions object at 10x and 20y
 .position(5) # Positions object at 5x and 5y
 .position() # Positions object at 0x and 0y (default)
+```
+
+#### `.rotation()`
+Applies rotation to the shape. Uses angle as input. By default, the object is rotated around its center, but an anchor point can be specified with relative `x` and `y` coordinates.
+```python
+.rotation(45) # Rotates object 45° around its center
+.position(90, anchor=(0,0)) # Rotates object 90° around (0,0) point
+.position(90, (0,0)) # Rotates object 90° around (0,0) point
 ```
 
 #### `.fill()`

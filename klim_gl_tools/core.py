@@ -11,7 +11,7 @@ class Shape:
 		self._vertices = []
 		self._vertex_colors = ['#000000']
 		self._position = (0,0)
-		self._rotation = 0
+		self._rotation = [0, (None, None)]
 		self._stroke = [1, '#000000']
 		self._mask = [[], '#000000']
 		self._render_passes = []
@@ -22,6 +22,10 @@ class Shape:
 		"""
 		if y is None: y = x
 		self._position = (x, y)
+		return self
+	
+	def rotation(self, angle = 0.0, anchor = (None, None)):
+		self._rotation = (angle, anchor)
 		return self
 	
 	def fill(self, color):
