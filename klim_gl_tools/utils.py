@@ -1,4 +1,5 @@
 import numpy as np
+from PIL import Image
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
@@ -66,3 +67,56 @@ def apply_gradient(vertices, colors, angle):
 
 	return vertex_colors
 
+def draw_polyon_boject(obj):
+	"""
+	Draw a polygon object with specified obj._render_passes.
+
+	Args:
+	- obj: The object to be drawn.
+	"""
+	x, y = obj._position
+	
+	if 'fill' in obj._render_passes:
+		glBegin(GL_POLYGON)
+		for vertex, color in zip(obj._vertices, obj._vertex_colors):
+			glColor3f(*useHex(color))
+			glVertex2f(vertex[0] + x, vertex[1] + y)
+		glEnd()
+	
+	if 'mask' in obj._render_passes:
+		# Implement mask drawing logic here
+		glColor3f(*useHex(obj._mask[1]))
+		glEnable(GL_POLYGON_STIPPLE)
+		glPolygonStipple(obj._mask[0])
+		glBegin(GL_POLYGON)
+		for vertex in obj._vertices:
+			glVertex2f(vertex[0] + x, vertex[1] + y)
+		glEnd()
+		glDisable(GL_POLYGON_STIPPLE)
+	
+	if 'stroke' in obj._render_passes:
+		glLineWidth(obj._stroke[0])
+		glColor3f(*useHex(obj._stroke[1]))
+		glBegin(GL_LINE_LOOP)
+		for vertex in obj._vertices:
+			glVertex2f(vertex[0] + x, vertex[1] + y)
+		glEnd()
+
+def useImageAsPattern(image_path, threshold = 0.5):
+	img = Image.open(image_path)
+	img = img.resize((32, 32))
+	img = img.convert("L")
+
+	threshold = int(threshold * 255)
+	img = img.point(lambda p: p > threshold and 1)
+
+	img_array = np.array(img)
+	stipple_pattern = bytearray(32 * 4)
+
+	for i, row in enumerate(img_array):
+		row_as_int = 0
+		for bit in row:
+			row_as_int = (row_as_int << 1) | bit
+		stipple_pattern[i*4:i*4+4] = int(row_as_int).to_bytes(4, 'big')
+
+	return stipple_pattern

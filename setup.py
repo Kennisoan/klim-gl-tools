@@ -10,6 +10,7 @@ setup(
 		url='https://github.com/Kennisoan/klim-glut-tools',
 		install_requires=[
 				'PyOpenGL',
-				'numpy'
+				'numpy',
+				'pillow'
 		],
 )

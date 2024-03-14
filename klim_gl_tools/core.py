@@ -12,6 +12,9 @@ class Shape:
 		self._vertex_colors = ['#000000']
 		self._position = (0,0)
 		self._rotation = 0
+		self._stroke = [1, '#000000']
+		self._mask = [[], '#000000']
+		self._render_passes = []
 	
 	def position(self, x, y = None):
 		"""
@@ -25,6 +28,7 @@ class Shape:
 		"""
 		Sets a solid fill color (HEX).
 		"""
+		self._render_passes.append('fill')
 		self._vertex_colors = [color for _ in self._vertices]
 		return self
 	
@@ -33,8 +37,22 @@ class Shape:
 		Applies a gradient to the shape based on the angle and the given colors.
 		"""
 		angle = kwargs.get('angle', 0)
+		self._render_passes.append('fill')
 		self._validate_vertex_colors()
 		self._vertex_colors = apply_gradient(self._vertices, colors, angle)
+		return self
+	
+	def stroke(self, width = 1, color = '#000000'):
+		"""
+		Applies a stroke
+		"""
+		self._render_passes.append('stroke')
+		self._stroke = [width, color]
+		return self
+	
+	def mask(self, pattern, color = '#000000'):
+		self._render_passes.append('mask')
+		self._mask = [pattern, color]
 		return self
 	
 	def _validate_vertex_colors(self, warn=False):
@@ -69,11 +87,7 @@ class Polygon(
 		# Non-tessellated
 		if self._tessellate == False:
 			self._validate_vertex_colors(warn=True)
-			glBegin(GL_POLYGON)
-			for vertex, color in zip(self._vertices, self._vertex_colors):
-				glColor3f(*useHex(color))
-				glVertex2f(vertex[0] + x, vertex[1] + y)
-			glEnd()
+			draw_polyon_boject(self)
 		
 		# Tessellated
 		else:
@@ -118,13 +132,8 @@ class Rectangle(Shape):
 		"""
 		Draws the shape.
 		"""
-		x, y = self._position
 		self._validate_vertex_colors(warn=True)
-		glBegin(GL_POLYGON)
-		for vertex, color in zip(self._vertices, self._vertex_colors):
-			glColor3f(*useHex(color))
-			glVertex2f(vertex[0] + x, vertex[1] + y)
-		glEnd()
+		draw_polyon_boject(self)
 
 class Ellipse(Shape):
 	"""
@@ -167,13 +176,8 @@ class Ellipse(Shape):
 		"""
 		Draws the shape.
 		"""
-		x, y = self._position
 		self._validate_vertex_colors(warn=True)
-		glBegin(GL_POLYGON)
-		for vertex, color in zip(self._vertices, self._vertex_colors):
-			glColor3f(*useHex(color))
-			glVertex2f(vertex[0] + x, vertex[1] + y)
-		glEnd()
+		draw_polyon_boject(self)
 	
 class Tree(Shape):
 	"""
