@@ -60,16 +60,21 @@ class Shape:
 			self._vertex_colors = [self._vertex_colors[0] for _ in self._vertices]
 			if warn: warnings.warn("Vertex colors were not applied properly.", RuntimeWarning)
 
-class Polygon(
-	Shape,
-	useVertexArrayMixin,
-	useSvgPathMixin):
+# REFACTOR: add .path modifier instead of use... mixins. Remove Mixins, do use... as utilities.
+class Polygon(Shape):
 	"""
 	Draws a complex shape described by vertices.
 	"""
 	def __init__(self):
 		super().__init__()
 		self._tessellate = False
+	
+	def path(self, vertex_array):
+		"""
+		Describes a shape using an array of vertices.
+		"""
+		self._vertices = vertex_array
+		return self
 	
 	def tessellate(self):
 		"""
@@ -212,7 +217,7 @@ class Tree(Shape):
 		x, y = self._position
 
 		Polygon() \
-			.useVertexArray([
+			.path([
 				(x - 15 * scale_factor, y - trunk_height),
 				(x, y - foliage_height - trunk_height),
 				(x + 15 * scale_factor, y - trunk_height)
