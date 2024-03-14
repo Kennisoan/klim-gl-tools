@@ -13,6 +13,9 @@ After installation, import the desired elements from the library to start utiliz
 from klim_gl_tools import Rectangle, ...
 ```
 
+Note: Klim’s GL Tools assumes a coordinate system that starts at the top-left corner of the canvas, with x increasing to the right and y increasing downwards. This orientation is crucial for positioning and transforming objects correctly within your projects.
+
+
 ## Getting Started
 
 At the heart of Klim’s GL Tools are two core concepts: objects and modifiers. Objects are the visual elements, such as shapes or figures, that you intend to display. Modifiers, on the other hand, are used to alter the appearance or behavior of these objects.

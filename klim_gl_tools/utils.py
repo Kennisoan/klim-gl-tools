@@ -149,6 +149,7 @@ def useImageAsPattern(image_path, threshold = 0.5):
 	img = Image.open(image_path)
 	img = img.resize((32, 32))
 	img = img.convert("L")
+	img = img.transpose(Image.FLIP_TOP_BOTTOM)
 
 	threshold = int(threshold * 255)
 	img = img.point(lambda p: p > threshold and 1)
