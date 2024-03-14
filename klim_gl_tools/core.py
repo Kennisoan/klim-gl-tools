@@ -60,7 +60,6 @@ class Shape:
 			self._vertex_colors = [self._vertex_colors[0] for _ in self._vertices]
 			if warn: warnings.warn("Vertex colors were not applied properly.", RuntimeWarning)
 
-# REFACTOR: add .path modifier instead of use... mixins. Remove Mixins, do use... as utilities.
 class Polygon(Shape):
 	"""
 	Draws a complex shape described by vertices.
