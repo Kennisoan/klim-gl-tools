@@ -51,30 +51,30 @@ The table below outlines the available objects along with their descriptions and
   <tr>
     <td><code>Rectangle</code></td>
     <td rowspan="3">
-      <code>.position()</code><br>
-      <code>.rotation()</code><br>
-      <code>.fill()</code><br>
-      <code>.stroke()</code><br>
-      <code>.gradient()</code><br>
-      <code>.mask()</code><br>
-      <code>.draw()</code>
+      <a href="#position"><code>.position()</code></a><br>
+      <a href="#rotation"><code>.rotation()</code></a><br>
+      <a href="#fill"><code>.fill()</code></a><br>
+      <a href="#stroke"><code>.stroke()</code></a><br>
+      <a href="#gradient"><code>.gradient()</code></a><br>
+      <a href="#mask"><code>.mask()</code></a><br>
+      <a href="#draw"><code>.draw()</code></a>
     </td>
-    <td><code>.size()</code></td>
+    <td><a href="#size"><code>.size()</code></a></td>
     <td>A rectangular shape.</td>
   </tr>
   <tr>
     <td><code>Ellipse</code></td>
     <td>
-      <code>.size()</code><br>
-      <code>.quality()</code>
+      <a href="#size"><code>.size()</code></a><br>
+      <a href="#quality"><code>.quality()</code></a>
     </td>
-    <td>An ellipse shape. Adjust its segment count with <code>.quality()</code> to change amount of segments used to represent ellipse (default is 100).</td>
+    <td>An ellipse shape. Adjust its segment count with <code>.quality()</code> to change the amount of segments used to represent the ellipse (default is 100).</td>
   </tr>
   <tr>
     <td><code>Polygon</code></td>
     <td>
-      <code>.path()</code>
-      <code>.tessellate()</code>
+      <a href="#path"><code>.path()</code></a><br>
+      <a href="#tessellate"><code>.tessellate()</code></a>
     </td>
     <td>A complex polygon shape. Use <code>.tessellate()</code> on non-convex shapes to allow them to be displayed properly. Tessellated shapes don't support <code>.gradient()</code>.</td>
   </tr>
@@ -92,12 +92,12 @@ The table below outlines the available objects along with their descriptions and
   <tr>
     <td><code>Tree</code></td>
     <td>
-      <code>.position()</code><br>
-      <code>.gradient()</code><br>
-      <code>.draw()</code>
+      <a href="#position"><code>.position()</code></a><br>
+      <a href="#gradient"><code>.gradient()</code></a><br>
+      <a href="#draw"><code>.draw()</code></a>
     </td>
-    <td><code>.height()</code></td>
-    <td>A simple tree with a gradient from roots to foliage. Use <code>.height()</code> to set the its height in pixels.</td>
+    <td><a href="#height"><code>.height()</code></a></td>
+    <td>A simple tree with a gradient from roots to foliage. Use <code>.height()</code> to set its height in pixels.</td>
   </tr>
 </table>
 
