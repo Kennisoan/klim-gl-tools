@@ -33,6 +33,8 @@ Here, `Rectangle` is the object. The methods `.position()`, `.size()`, and `.fil
 
 Different objects support various modifiers, tailored to their specific characteristics. For detailed information on the objects and applicable modifiers, refer to the [Objects](#objects) and [Modifiers](#modifiers) sections.
 
+Integrate your objects into a display function to see them rendered in your application. For an example on how this can be done with GLUT, refer to `template.py`.
+
 ## Objects
 
 The table below outlines the available objects along with their descriptions and applicable modifiers:
@@ -49,29 +51,30 @@ The table below outlines the available objects along with their descriptions and
   <tr>
     <td><code>Rectangle</code></td>
     <td rowspan="3">
-      <code>.position()</code><br>
-      <code>.fill()</code><br>
-      <code>.stroke()</code><br>
-      <code>.gradient()</code><br>
-      <code>.mask()</code><br>
-      <code>.draw()</code>
+      <a href="#position"><code>.position()</code></a><br>
+      <a href="#rotation"><code>.rotation()</code></a><br>
+      <a href="#fill"><code>.fill()</code></a><br>
+      <a href="#stroke"><code>.stroke()</code></a><br>
+      <a href="#gradient"><code>.gradient()</code></a><br>
+      <a href="#mask"><code>.mask()</code></a><br>
+      <a href="#draw"><code>.draw()</code></a>
     </td>
-    <td><code>.size()</code></td>
+    <td><a href="#size"><code>.size()</code></a></td>
     <td>A rectangular shape.</td>
   </tr>
   <tr>
     <td><code>Ellipse</code></td>
     <td>
-      <code>.size()</code><br>
-      <code>.quality()</code>
+      <a href="#size"><code>.size()</code></a><br>
+      <a href="#quality"><code>.quality()</code></a>
     </td>
-    <td>An ellipse shape. Adjust its segment count with <code>.quality()</code> to change amount of segments used to represent ellipse (default is 100).</td>
+    <td>An ellipse shape. Adjust its segment count with <code>.quality()</code> to change the amount of segments used to represent the ellipse (default is 100).</td>
   </tr>
   <tr>
     <td><code>Polygon</code></td>
     <td>
-      <code>.path()</code>
-      <code>.tessellate()</code>
+      <a href="#path"><code>.path()</code></a><br>
+      <a href="#tessellate"><code>.tessellate()</code></a>
     </td>
     <td>A complex polygon shape. Use <code>.tessellate()</code> on non-convex shapes to allow them to be displayed properly. Tessellated shapes don't support <code>.gradient()</code>.</td>
   </tr>
@@ -89,12 +92,12 @@ The table below outlines the available objects along with their descriptions and
   <tr>
     <td><code>Tree</code></td>
     <td>
-      <code>.position()</code><br>
-      <code>.gradient()</code><br>
-      <code>.draw()</code>
+      <a href="#position"><code>.position()</code></a><br>
+      <a href="#gradient"><code>.gradient()</code></a><br>
+      <a href="#draw"><code>.draw()</code></a>
     </td>
-    <td><code>.height()</code></td>
-    <td>A simple tree with a gradient from roots to foliage. Use <code>.height()</code> to set the its height in pixels.</td>
+    <td><a href="#height"><code>.height()</code></a></td>
+    <td>A simple tree with a gradient from roots to foliage. Use <code>.height()</code> to set its height in pixels.</td>
   </tr>
 </table>
 
@@ -108,6 +111,14 @@ Changes the shapes position on canvas. Uses `x` and `y` as input. If `y` is omit
 .position(10, 20) # Positions object at 10x and 20y
 .position(5) # Positions object at 5x and 5y
 .position() # Positions object at 0x and 0y (default)
+```
+
+#### `.rotation()`
+Applies rotation to the shape. Uses angle as input. By default, the object is rotated around its center, but an anchor point can be specified with relative `x` and `y` coordinates.
+```python
+.rotation(45) # Rotates object 45° around its center
+.position(90, anchor=(0,0)) # Rotates object 90° around (0,0) point
+.position(90, (0,0)) # Rotates object 90° around (0,0) point
 ```
 
 #### `.fill()`
